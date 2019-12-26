@@ -49,7 +49,7 @@ function LogDeployment
 
   logInfo '开始编译执行...'
 
-  #&$MsBuild $proName.FullName /t:Rebuild /p:DeployOnBuild=true /flp:ErrorsOnly`;verbosity:minimal`;LogFile=$savepath\info.log`;Append`;Encoding=UTF-8 /p:PublishProfile=$pubxml 
+  &$MsBuild $proName.FullName /t:Rebuild /p:DeployOnBuild=true /flp:ErrorsOnly`;verbosity:minimal`;LogFile=$savepath\info.log`;Append`;Encoding=UTF-8 /p:PublishProfile=$pubxml 
   #iex -Command "& '$global_msBuildPath' '$project_path'"
 
   logInfo '编译执行结束...'  
@@ -79,6 +79,12 @@ function LogDeployment
 #复制文件
 function copyLocal($src, $dest)
 {
+    if(Test-Path $dest)
+    {
+        logInfo " 正在删除本机地址:$dest 中的文件..."
+        Remove-Item $dest -Recurse
+    }
+
     logInfo " 开始拷贝到本机地址:$dest"
     xcopy $src $dest /e /h /y /i
     logInfo " 本机拷贝完成..."
@@ -113,16 +119,16 @@ function CopyRemote
             #映射网络盘
             $net.mapnetworkdrive($drive, $dest, $true, $username, $password)
         }
+        else
+        {
+            logError '映射虚拟网络盘失败！'
+            exit
+        }
+
         #源文件
         $Files_S = Get-ChildItem $src -Recurse
         #目的文件夹
         $Files_D = Get-ChildItem $drive -Recurse
-
-        if(!$Files_D.Exists)
-        {
-            logInfo '拷贝目的文件夹不存在'
-            exit
-        }
 
         #统计变量
         $sumCnt = $skipCnt = $copyCnt = 0
@@ -321,15 +327,17 @@ function logError
     {
         New-Item $savepath -ItemType directory
     }
-    $datetime.ToString() +":" + $msg | Out-File -filepath $savepath'\error.log' -Append -Encoding utf8
+    $content = $datetime.ToString() +":" + $msg
+    Write-Host $content -ForegroundColor Yellow
+    $content | Out-File -filepath $savepath'\error.log' -Append -Encoding utf8
 }
 
 
 #无参数调用
 #LogDeployment
 #参数调用实例
-LogDeployment -deployDestination 'D:\publish1'
-#LogDeployment -deployDestination '\\192.168.3.111\d:\\CSSDMSWebServie'
+#LogDeployment -deployDestination 'D:\publish1'
+LogDeployment -deployDestination '\\192.168.3.111\CSSDMSWebService'
 
 
 #外部参数实例
