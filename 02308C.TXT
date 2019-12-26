@@ -1,0 +1,63 @@
+REPORTS
+->HISTORICAL
+                                       
+                                       
+***************************************
+            ****************           
+End user         :  ****************   
+Model            :  DS500CL            
+Machine          :  14086              
+Work station     :      0              
+Software         :   7.00              
+Operator         :                     
+---------------------------------------
+C 1 short        Record:          02308
+.......................................
+START:            03/06/19     h: 08:29
+                                       
+->  1: drain                   h: 08:30
+     T1=  25.3°C  T2=  25.4°C          
+                                       
+->  2: washing                 h: 08:47
+     T1=  52.7°C  T2=  52.9°C          
+                  programmed   executed
+Product1= OK          45 mL     ----mL 
+     T>=  50°C   t=  300 s  t=  300 s  
+     (T1=  50.5°C) (T2=  50.5°C)       
+                                       
+->  3: drain                   h: 08:48
+     T1=  50.8°C  T2=  51.5°C          
+                                       
+->  4: washing                 h: 08:52
+     T1=  34.6°C  T2=  34.7°C          
+     T>=   0°C   t=   30 s  t=   30 s  
+     (T1=  35.1°C) (T2=  35.2°C)       
+                                       
+->  5: washing                 h: 08:53
+     T1=  34.6°C  T2=  34.7°C          
+     T>=   0°C   t=   60 s  t=   60 s  
+     (T1=  34.6°C) (T2=  34.7°C)       
+                                       
+->  6: drain                   h: 08:53
+     T1=  34.6°C  T2=  34.7°C          
+                                       
+->  7: treatment               h: 09:21
+     T1=  90.9°C  T2=  91.2°C          
+                  programmed   executed
+Product3= OK           6 mL     ----mL 
+     T>=  90°C   t=  180 s  t=  180 s  
+     (T1=  90.5°C) (T2=  90.6°C)       
+     A0(1)=  3158  A0(2)=  3319        
+                                       
+->  8: drain                   h: 09:23
+     T1=  89.0°C  T2=  89.4°C          
+                                       
+->  9: drying                  h: 09:36
+     T1=  53.9°C  T2=  53.1°C          
+     Tmax= 146.0°C                     
+                                       
+STOP:             03/06/19     h: 09:36
+END CYCLE: OK                          
+                                       
+                                       
+                                       
