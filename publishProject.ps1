@@ -18,7 +18,7 @@ $MsBuild = Get-MsBuildPath
 function LogDeployment
 {
   #可设置参数
-  #param([string]$filepath,[string]$deployDestination)
+  param([string]$filepath=$cur,[string]$deployDestination)
   Trap {
     "Trap到了异常: $($_.Exception.Message)";
     logError($_.Exception.Message)
@@ -32,7 +32,7 @@ function LogDeployment
   }
 
   logInfo '查找csproj项目文件'
-  $proName = get-childitem -Filter *.csproj
+  $proName = get-childitem -Path $filepath -Filter *.csproj
   if($proName.Length -eq 0)
   {
     logInfo 'csproj项目文件不存在'
@@ -40,7 +40,7 @@ function LogDeployment
   }
    
   logInfo '查找publicxml配置文件'
-  $pubxml = get-childitem -Filter *.pubxml -Recurse
+  $pubxml = get-childitem -Path $filepath -Filter *.pubxml -Recurse
   if($pubxml.Length -eq 0)
   {
     logInfo 'publicxml配置文件不存在'
@@ -60,18 +60,28 @@ function LogDeployment
   $filetext =  "Deployed package to " + $xml.Project.PropertyGroup.publishUrl #+ " on " + $datetime
   logInfo($filetext)
 
-  #本地拷贝
-  #copyLocal $xml.Project.PropertyGroup.publishUrl,'D:\publish1'
-  #远程拷贝
-  CopyRemote $xml.Project.PropertyGroup.publishUrl '\\192.168.3.111\setup' $savepath\info.log
+  #部署地址为null
+  if(!$deployDestination)
+  {
+     exit
+  }
+  elseif($deployDestination -match '^[a-gA-G]:\\')
+  {
+     #本地拷贝
+     copyLocal $xml.Project.PropertyGroup.publishUrl $deployDestination
+  }
+  else{
+     #远程拷贝
+     CopyRemote $xml.Project.PropertyGroup.publishUrl $deployDestination $savepath\info.log
+  }
 }
 
 #复制文件
 function copyLocal($src, $dest)
 {
-    logInfo "从文件 $src 复制到 $dest 开始..."
+    logInfo " 开始拷贝到本机地址:$dest"
     xcopy $src $dest /e /h /y /i
-    logInfo "从文件 $src 复制到 $dest 完成..."
+    logInfo " 本机拷贝完成..."
 }
 
 #将脚本文件所在目录下的文件夹下的文件全部拷贝到站点目录下
@@ -92,15 +102,28 @@ function CopyRemote
             if($logfile) {$msg | Out-File -filepath $logfile -Append -Encoding utf8}
             exit
         }
+        #判断映射盘是否存在
         if(Test-Path $drive)
         {
             $net.RemoveNetworkDrive($drive,$true,$true)
         }
-        $net.mapnetworkdrive($drive, $dest, $true, $username, $password)
+
+        if(Test-Path $dest)
+        {
+            #映射网络盘
+            $net.mapnetworkdrive($drive, $dest, $true, $username, $password)
+        }
         #源文件
         $Files_S = Get-ChildItem $src -Recurse
         #目的文件夹
         $Files_D = Get-ChildItem $drive -Recurse
+
+        if(!$Files_D.Exists)
+        {
+            logInfo '拷贝目的文件夹不存在'
+            exit
+        }
+
         #统计变量
         $sumCnt = $skipCnt = $copyCnt = 0
         
@@ -302,10 +325,16 @@ function logError
 }
 
 
-#有参数调用
-#LogDeployment $args[0] $args[1]
 #无参数调用
-LogDeployment
+#LogDeployment
+#参数调用实例
+LogDeployment -deployDestination 'D:\publish1'
+#LogDeployment -deployDestination '\\192.168.3.111\d:\\CSSDMSWebServie'
+
+
+#外部参数实例
+#LogDeployment $args[0] $args[1]
+
 
 #visual studio 2013 项目中生成事件调用
 #powershell.exe  –ExecutionPolicy Unrestricted "& { $(ProjectDir)LogDeploy.ps1 'C:\Users\Administrator\Desktop\log.txt' 'TESTWEB1' }"
