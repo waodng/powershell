@@ -54,7 +54,7 @@ function LogDeployment
 
   logInfo '编译执行结束...'  
 
-  $path = get-childitem -Filter *.pubxml -Recurse
+  $path = get-childitem -Path $filepath -Filter *.pubxml -Recurse
   $xml = [xml](get-content $path.FullName)
   
   $filetext =  "Deployed package to " + $xml.Project.PropertyGroup.publishUrl #+ " on " + $datetime
@@ -63,6 +63,7 @@ function LogDeployment
   #部署地址为null
   if(!$deployDestination)
   {
+     logInfo '部署地址未设置！'
      exit
   }
   elseif($deployDestination -match '^[a-gA-G]:\\')
@@ -337,11 +338,11 @@ function logError
 #LogDeployment
 #参数调用实例
 #LogDeployment -deployDestination 'D:\publish1'
-LogDeployment -deployDestination '\\192.168.3.111\CSSDMSWebService'
+#LogDeployment -deployDestination '\\192.168.3.111\CSSDMSWebService'
 
 
 #外部参数实例
-#LogDeployment $args[0] $args[1]
+LogDeployment $args[0] $args[1]
 
 
 #visual studio 2013 项目中生成事件调用

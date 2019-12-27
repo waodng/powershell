@@ -1,0 +1,30 @@
+========================
+  CYCLE - INSTR.        
+========================
+                        
+  CYCLE START   3:04:33P
+  CYCLE DATE   12/10/18 
+  CYCLE NUMBER  0002433 
+  UNIT NUMBER 3624210007
+  MOTOR SPEED = HIGH    
+                        
+TREATMENT  TIME         
+------------------------
+PRE-WASH1  3:04:34P     
+WASH 1     3:09:51P     
+RINSE 1    3:19:43P     
+THERMAL    3:24:03P     
+                        
+THERMAL RINSE           
+COMPLETED AT  3:34:04P  
+                        
+DRYING     3:35:34P     
+                        
+COMPLETED AT  3:52:33P  
+                        
+CYCLE TIME = 0:48:02    
+                        
+========================
+=   READY TO UNLOAD    =
+========================
+

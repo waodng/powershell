@@ -1,0 +1,51 @@
+========================
+=== BOWIE-DICK WARMUP ==
+========================
+CYCLE START AT  9:03:02 
+            ON 17/11/22 
+                        
+CYCLE COUNT           24
+OPERATOR ______________ 
+STERILIZER    VAC 02    
+SERIAL # 0336116-10     
+                        
+    STER TEMP = 134.0C  
+ CONTROL TEMP = 134.8C  
+    STER TIME = 3:30M:S 
+     DRY TIME = 1:00M:S 
+                        
+                  V=Vbar
+- TIME      T= C  P=Pbar
+------------------------
+C  9:03:26   36.3  0.01P
+C  9:05:27  105.2  0.38P
+S  9:12:09  134.0  2.19P
+* UNDERTEMP             
+F  9:12:16  133.9  2.21P
+  TEMP MIN=133.0C       
+S  9:12:28  134.1  2.25P
+S  9:13:28  134.7  2.21P
+S  9:14:28  134.7  2.21P
+S  9:15:28  134.9  2.20P
+E  9:15:59  134.8  2.20P
+E  9:16:44  105.6  0.24P
+E  9:17:44   92.0  0.60V
+Z  9:19:06   88.7  0.07V
+                        
+LOAD             112201 
+                        
+  TEMP MAX=135.3C       
+  TEMP MIN=134.1C       
+                        
+CONDITION   = 8:43      
+STERILIZE   = 3:50      
+EXHAUST     = 3:07      
+TOTAL CYCLE =15:40      
+                        
+PRINTOUT CHECKED BY:    
+                        
+________________________
+                        
+========================
+                        
+
