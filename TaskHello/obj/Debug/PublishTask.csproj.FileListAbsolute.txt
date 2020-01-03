@@ -1,0 +1,5 @@
+C:\Users\Administrator\Desktop\Test\WebSite\Bin\PublishTask.dll
+C:\Users\Administrator\Desktop\Test\WebSite\Bin\PublishTask.pdb
+C:\Users\Administrator\Desktop\Test\TaskHello\obj\Debug\PublishTask.g.resources
+C:\Users\Administrator\Desktop\Test\TaskHello\obj\Debug\PublishTask.dll
+C:\Users\Administrator\Desktop\Test\TaskHello\obj\Debug\PublishTask.pdb

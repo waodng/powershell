@@ -1,0 +1,7 @@
+C:\Users\Administrator\Desktop\Test\TaskHello\bin\Debug\HelloWordTask.dll
+C:\Users\Administrator\Desktop\Test\TaskHello\bin\Debug\HelloWordTask.pdb
+C:\Users\Administrator\Desktop\Test\WebSite\Bin\HelloWordTask.dll
+C:\Users\Administrator\Desktop\Test\WebSite\Bin\HelloWordTask.pdb
+C:\Users\Administrator\Desktop\Test\TaskHello\obj\Debug\HelloWordTask.dll
+C:\Users\Administrator\Desktop\Test\TaskHello\obj\Debug\HelloWordTask.pdb
+C:\Users\Administrator\Desktop\Test\TaskHello\obj\Debug\HelloWordTask.g.resources

@@ -33,12 +33,21 @@ function LogDeployment
 
   logInfo '查找csproj项目文件'
   $proName = get-childitem -Path $filepath -Filter *.csproj
+  $isWeb = $false
   if($proName.Length -eq 0)
   {
     logInfo 'csproj项目文件不存在'
-	exit
+
+	logInfo '查找publishproj项目文件'
+    $proName = get-childitem -Path $filepath -Filter *.publishproj
+    if($proName.Length -eq 0)
+    {
+       logInfo 'publishproj项目文件不存在'
+	   exit
+    }
+    $isWeb = $true
   }
-   
+
   logInfo '查找publicxml配置文件'
   $pubxml = get-childitem -Path $filepath -Filter *.pubxml -Recurse
   if($pubxml.Length -eq 0)
@@ -49,8 +58,16 @@ function LogDeployment
 
   logInfo '开始编译执行...'
 
-  &$MsBuild $proName.FullName /t:Rebuild /p:DeployOnBuild=true /flp:ErrorsOnly`;verbosity:minimal`;LogFile=$savepath\info.log`;Append`;Encoding=UTF-8 /p:PublishProfile=$pubxml 
-  #iex -Command "& '$global_msBuildPath' '$project_path'"
+  if($isWeb)
+  {
+  #GatherAllFilesToPublish
+    &$MsBuild $proName.FullName /t:GatherAllFilesToPublish /p:DeployOnBuild=true /flp:ErrorsOnly`;verbosity:minimal`;LogFile=$savepath\info.log`;Append`;Encoding=UTF-8 /p:PublishProfile=$pubxml 
+  }
+  else
+  {
+    &$MsBuild $proName.FullName /t:Rebuild /p:DeployOnBuild=true /flp:ErrorsOnly`;verbosity:minimal`;LogFile=$savepath\info.log`;Append`;Encoding=UTF-8 /p:PublishProfile=$pubxml 
+    #iex -Command "& '$global_msBuildPath' '$project_path'"
+  }
 
   logInfo '编译执行结束...'  
 
