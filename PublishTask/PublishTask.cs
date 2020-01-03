@@ -30,6 +30,22 @@ namespace PublishTask
             }
         }
 
+        private string _versionPath = string.Empty;
+        /// <summary>
+        /// 修改版本号文件路径
+        /// </summary>
+        public string VersionPath
+        {
+            get
+            {
+                return _versionPath;
+            }
+            set
+            {
+                this._versionPath = value;
+            }
+        }
+
         
         private string _outPath = @"C:\Users\Administrator\Desktop\Temp";
         /// <summary>
@@ -74,6 +90,8 @@ namespace PublishTask
 
             Log.LogWarning("发布任务的路径" + OutPath);
             RunCmdShow(@"C:\Windows\System32\cmd.exe", string.Format("/c xcopy {0} {1}  /e /h /y /i ", publishDir, OutPath));
+            //替换版本号
+            ReplaceContent(VersionPath);
             if (File.Exists(config))
             {
                 System.Xml.XmlDocument xml = new System.Xml.XmlDocument();
@@ -102,6 +120,30 @@ namespace PublishTask
                 xml.Save(config);
             }
             return true;
+        }
+        /// <summary>
+        /// 修改文件内容
+        /// </summary>
+        /// <param name="path"></param>
+        protected void ReplaceContent(string path)
+        {
+            if (File.Exists(path))
+            {
+                string strContent = File.ReadAllText(path);
+                strContent = System.Text.RegularExpressions.Regex.Replace(strContent, @"({{\s*)([1-9]{1}.\d{1})(.\*\s*}})", "$2." + GetVersion());
+                File.WriteAllText(path, strContent);
+            }
+        }
+
+        /// <summary>
+        /// 得到版本的后两位 日期数+毫秒数
+        /// </summary>
+        /// <returns></returns>
+        protected string GetVersion()
+        {
+            string endVersion = (DateTime.Now - new DateTime(2000, 1, 1, 0, 0, 0)).Days.ToString();
+            endVersion += "." + (DateTime.Now - DateTime.Parse(DateTime.Now.ToString("yyyy-MM-dd 0:0:0"))).Ticks.ToString().Substring(0,5);
+            return endVersion;
         }
 
         //获取本地文件Hash值
