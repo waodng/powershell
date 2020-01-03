@@ -136,7 +136,7 @@ namespace PublishTask
         }
 
         /// <summary>
-        /// 得到版本的后两位 日期数+毫秒数
+        /// 得到版本的后两位 日期数+ 刻度数前5位
         /// </summary>
         /// <returns></returns>
         protected string GetVersion()
